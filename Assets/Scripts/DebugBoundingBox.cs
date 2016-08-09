@@ -19,7 +19,7 @@ public class DebugBoundingBox : MonoBehaviour {
 	private Material mat;
 
 	// Use this for initialization
-	void Start () {
+	void Start () {	
 		allBoxCollider2D = Resources.FindObjectsOfTypeAll<BoxCollider2D> ();
 	}
 	
@@ -48,34 +48,36 @@ public class DebugBoundingBox : MonoBehaviour {
 		mat.SetPass (0);
 
 		foreach (var collider in allBoxCollider2D) {
-			var scale = collider.size * 0.5f;
-			var points = new Vector3[5];
+			if (collider.enabled) {
+				var scale = collider.size * 0.5f;
+				var points = new Vector3[5];
 
-			points [0] = collider.transform.TransformPoint (new Vector3 (-scale.x + collider.offset.x, scale.y + collider.offset.y, 0));
-			points [1] = collider.transform.TransformPoint (new Vector3 (scale.x + collider.offset.x, scale.y + collider.offset.y, 0));
-			points [2] = collider.transform.TransformPoint (new Vector3 (scale.x + collider.offset.x, -scale.y + collider.offset.y, 0));
-			points [3] = collider.transform.TransformPoint (new Vector3 (-scale.x + collider.offset.x, -scale.y + collider.offset.y, 0));
-			points [4] = points [0];
+				points [0] = collider.transform.TransformPoint (new Vector3 (-scale.x + collider.offset.x, scale.y + collider.offset.y, 0));
+				points [1] = collider.transform.TransformPoint (new Vector3 (scale.x + collider.offset.x, scale.y + collider.offset.y, 0));
+				points [2] = collider.transform.TransformPoint (new Vector3 (scale.x + collider.offset.x, -scale.y + collider.offset.y, 0));
+				points [3] = collider.transform.TransformPoint (new Vector3 (-scale.x + collider.offset.x, -scale.y + collider.offset.y, 0));
+				points [4] = points [0];
 	
-			var setting = layersSettings.Find (i => i.layermask.value == (i.layermask.value | (1 << collider.gameObject.layer)));
-			if (setting != null) {
-				GL.Begin (GL.LINES);
-				GL.Color (setting.color);
-				foreach (var p in points) {
-					GL.Vertex3 (p.x, p.y, p.z);
-				}
-				GL.End ();
+				var setting = layersSettings.Find (i => i.layermask.value == (i.layermask.value | (1 << collider.gameObject.layer)));
+				if (setting != null) {
+					GL.Begin (GL.LINES);
+					GL.Color (setting.color);
+					foreach (var p in points) {
+						GL.Vertex3 (p.x, p.y, p.z);
+					}
+					GL.End ();
 
-				var quadColor = new Color (setting.color.r, setting.color.g, setting.color.b, 0.7f);
-				GL.Begin (GL.QUADS);
-				GL.Color (quadColor);
-				foreach (var p in points) {
-					GL.Vertex3 (p.x, p.y, p.z);
+					var quadColor = new Color (setting.color.r, setting.color.g, setting.color.b, 0.7f);
+					GL.Begin (GL.QUADS);
+					GL.Color (quadColor);
+					foreach (var p in points) {
+						GL.Vertex3 (p.x, p.y, p.z);
+					}
+					GL.End ();
 				}
-				GL.End ();
 			}
 		}
-
+	
 		//GL.PopMatrix ();
 	}
 }
