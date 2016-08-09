@@ -1,0 +1,145 @@
+fileFormatVersion: 2
+guid: a61ba46c53e934db5903bd963ad68118
+timeCreated: 1470711166
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Idle_0
+    21300002: Idle_1
+    21300004: Idle_2
+    21300006: Idle_3
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -3
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: 0
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 10
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: Idle_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 50
+        height: 105
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 10, y: 34.5}
+        - {x: 5, y: 36.5}
+        - {x: 2, y: 36.5}
+        - {x: -3, y: 34.5}
+        - {x: -12, y: 31.5}
+        - {x: -17, y: 26.5}
+        - {x: -23, y: -23.5}
+        - {x: -23, y: -47.5}
+        - {x: -21, y: -48.5}
+        - {x: 23, y: -48.5}
+        - {x: 24, y: -46.5}
+        - {x: 24, y: -33.5}
+        - {x: 14, y: 31.5}
+    - name: Idle_1
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 0
+        width: 50
+        height: 105
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 15, y: 35.5}
+        - {x: -8, y: 35.5}
+        - {x: -19, y: 24.5}
+        - {x: -23, y: -4.5}
+        - {x: -23, y: -48.5}
+        - {x: 24, y: -48.5}
+        - {x: 24, y: 3.5}
+        - {x: 21, y: 34.5}
+    - name: Idle_2
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 0
+        width: 50
+        height: 105
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 10, y: 34.5}
+        - {x: 5, y: 36.5}
+        - {x: 2, y: 36.5}
+        - {x: -3, y: 34.5}
+        - {x: -12, y: 31.5}
+        - {x: -17, y: 26.5}
+        - {x: -23, y: -23.5}
+        - {x: -23, y: -47.5}
+        - {x: -21, y: -48.5}
+        - {x: 23, y: -48.5}
+        - {x: 24, y: -46.5}
+        - {x: 24, y: -33.5}
+        - {x: 14, y: 31.5}
+    - name: Idle_3
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 0
+        width: 50
+        height: 105
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 12, y: 37.5}
+        - {x: -20, y: 37.5}
+        - {x: -23, y: 17.5}
+        - {x: -23, y: -48.5}
+        - {x: 24, y: -48.5}
+        - {x: 24, y: 5.5}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
