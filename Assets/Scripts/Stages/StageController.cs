@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class LevelStage : MonoBehaviour {
+public class StageController : MonoBehaviour {
 
 	public Transform[] spawnPoints;
 	public Transform[] startingBlocks;
 
-	public void InitialSpawn() {
+	void Start() {
 		var controllers = FindObjectsOfType<PlayerController> ();
 		controllers.Randomize ();
 		for (int i = 0; i < controllers.Length; i++) {
@@ -16,6 +16,8 @@ public class LevelStage : MonoBehaviour {
 				controller.transform.position = startingBlock.position;
 			}
 		}
+
+		GameController.gameState.StartMatch ();
 	}
 
 	public void Spawn(PlayerController controller) {

@@ -30,7 +30,8 @@ public class MenuController : MonoBehaviour {
 		Application.Quit ();
 	}
 
-	public void SelectCharacter(GameObject characterObject, string nextScene) {
+	public void LoadCharacterSelection(string nextScene) {
+		GameController.gameState.StartCharacterSelection ();
 		LoadScene (nextScene);
 	}
 }

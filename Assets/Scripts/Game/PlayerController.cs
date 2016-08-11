@@ -5,9 +5,12 @@ using Rewired;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour {
 
-	public float maxSpeed = 10f;
+	public float walkSpeed = 10f;
+	public float runSpeed = 20f;
+	public float runThreshold = 0.5f;
 	public float jumpVelocity = 100;
 	public LayerMask groundLayer;
+	public GameObject characterPrefab;
 	public Character character;
 	public string playerName;
 	public int playerId;
@@ -29,14 +32,16 @@ public class PlayerController : MonoBehaviour {
 	private Transform groundCheck;
 
 	void Start () {
-		player = ReInput.players.GetPlayer (playerId);
-		groundCheck = character.groundCheck;
 		rigidbody2D = GetComponent<Rigidbody2D> ();
-		anim = character.GetComponent <Animator> ();
-		characterController = character.GetComponent<ICharacterController> ();
 	}
 
 	void FixedUpdate () {
+		// Do nothing if character has not been instantiate
+		if (character == null) {
+			return;
+		}
+
+		// If character has been instantiate ...
 		grounded = Physics2D.OverlapCircle (groundCheck.position, groundCheckRadius, groundLayer);
 		canJump = grounded;
 		anim.SetBool ("grounded", grounded);
@@ -57,7 +62,13 @@ public class PlayerController : MonoBehaviour {
 
 		if (canMove) {
 			var move = player.GetAxis ("Control Stick Horizontal");
-			rigidbody2D.velocity = new Vector2 (move * maxSpeed, rigidbody2D.velocity.y);
+			var moveDirection = move > 0 ? 1 : -1;
+
+			if (Mathf.Abs (move) > runThreshold) {
+				rigidbody2D.velocity = new Vector2 (moveDirection * runSpeed, rigidbody2D.velocity.y);
+			} else if (Mathf.Abs (move) > 0) {
+				rigidbody2D.velocity = new Vector2 (moveDirection * walkSpeed, rigidbody2D.velocity.y);
+			}
 
 			anim.SetFloat ("hSpeed", Mathf.Abs (move));
 
@@ -114,6 +125,15 @@ public class PlayerController : MonoBehaviour {
 				}
 			}
 		}
+	}
+
+	public void InstantiateCharacter() {
+		var obj = Instantiate (characterPrefab, transform) as GameObject;
+		obj.transform.localPosition = new Vector3 (0, 0, 0);
+		character = obj.GetComponent<Character> ();
+		groundCheck = character.groundCheck;
+		anim = character.GetComponent <Animator> ();
+		characterController = character.GetComponent<ICharacterController> ();
 	}
 
 	void Flip () {
