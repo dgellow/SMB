@@ -29,4 +29,8 @@ public class MenuController : MonoBehaviour {
 	public void Exit () {
 		Application.Quit ();
 	}
+
+	public void SelectCharacter(GameObject characterObject, string nextScene) {
+		LoadScene (nextScene);
+	}
 }
