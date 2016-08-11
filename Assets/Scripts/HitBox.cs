@@ -15,9 +15,9 @@ public class HitBox : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D other) {
 		var otherHitBox = other.GetComponent<HitBox> ();
-		var controller = GetComponentInParent<CharacterController2D> ();
-		var otherController = GetComponentInParent<CharacterController2D> ();
-		if (type == HitBoxType.Damage && otherHitBox.type == HitBoxType.Attack) {
+		var controller = GetComponentInParent<PlayerController> ();
+		var otherController = GetComponentInParent<PlayerController> ();
+		if (otherHitBox && (type == HitBoxType.Damage && otherHitBox.type == HitBoxType.Attack)) {
 			Debug.Log (controller.gameObject.name + " hit by " + otherController.gameObject.name + " for " + otherHitBox.damage + " damages");
 			var force = new Vector3 (otherHitBox.damage, 0, 0);
 			var rigidbody2D = GetComponentInParent<Rigidbody2D> ();
