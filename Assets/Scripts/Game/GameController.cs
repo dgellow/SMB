@@ -85,5 +85,10 @@ public class GameController : MonoBehaviour {
 			playerController.InstantiateCharacter ();
 		}
 		matchState = new MatchState (players);
+		StartCoroutine (PlayMatchIntro());
+	}
+
+	IEnumerator PlayMatchIntro() {
+		yield return new WaitForSeconds (1);
 	}
 }

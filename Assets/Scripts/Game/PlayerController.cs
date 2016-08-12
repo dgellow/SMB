@@ -20,9 +20,9 @@ public class PlayerController : MonoBehaviour {
 	[HideInInspector]
 	public Player player;
 
-	public bool canJump = true;
-	public bool canMove = true;
-	public bool canAttack = true;
+	public bool canJump = false;
+	public bool canMove = false;
+	public bool canAttack = false;
 	public bool grounded = false;
 
 	private ICharacterController characterController;
