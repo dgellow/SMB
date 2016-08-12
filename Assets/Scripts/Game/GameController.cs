@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Rewired;
+using System.Linq;
 
 [System.Serializable]
 public class MatchState {
@@ -70,11 +71,11 @@ public class GameController : MonoBehaviour {
 		players.Clear ();
 
 		// Instantiate and register player controllers
-		for (var i = 0; i < ReInput.players.Players.Count; i++) {
+		var activePlayers = ReInput.players.GetPlayers ().Where (p => p.isPlaying).OrderBy (x => x.id);
+		for (var i = 0; i < activePlayers.Count (); i++) {
 			var playerControllerObject = Instantiate (playerPrefab);
 			DontDestroyOnLoad (playerControllerObject);
 			var playerController = playerControllerObject.GetComponent<PlayerController> ();
-			playerController.playerId = i;
 			playerController.player = ReInput.players.GetPlayer (i);
 			players.Add (playerController);
 		}

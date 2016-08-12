@@ -21,9 +21,9 @@ public class StageController : MonoBehaviour {
 
 		playersInfo = FindObjectsOfType<PlayerInfo> ();
 		for(var i = 0; i < GameController.gameState.players.Count; i++) {
-			var player = GameController.gameState.players [i];
+			var playerController = GameController.gameState.players [i];
 			var playerInfo = playersInfo [i];
-			playerInfo.playerId = player.playerId;
+			//playerInfo.playerId = playerController.player.id;
 		}
 
 		var controllers = FindObjectsOfType<PlayerController> ();

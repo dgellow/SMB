@@ -12,8 +12,6 @@ public class PlayerController : MonoBehaviour {
 	public LayerMask groundLayer;
 	public GameObject characterPrefab;
 	public Character character;
-	public string playerName;
-	public int playerId;
 
 	[HideInInspector]
 	public Animator anim;

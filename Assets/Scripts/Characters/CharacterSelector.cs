@@ -28,8 +28,9 @@ public class CharacterSelector : MonoBehaviour, ISelectHandler {
 		
 	#region ISelectHandler implementation
 	public void OnSelect (BaseEventData eventData) {
-		var playerController = GameController.gameState.players [0];
-		playerController.characterPrefab = (eventData.selectedObject.GetComponent<CharacterSelector> ()).characterPrefab;
+		foreach (var playerController in GameController.gameState.players) {
+			playerController.characterPrefab = (eventData.selectedObject.GetComponent<CharacterSelector> ()).characterPrefab;
+		}
 	}
 	#endregion
 }
