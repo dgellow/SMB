@@ -1,12 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 public interface IMatchRules {
 	void Increment ();
 	void Decrement ();
-	void RenderGUI ();
 	void Initialize ();
-	void CheckVictory ();
+	bool CheckVictory ();
+	PlayerController GetWinner ();
+	int GetWinnerId ();
 }
 
 public enum HandicapMode {
@@ -57,16 +60,41 @@ public class StockRules: MatchRules, IMatchRules {
 		}	
 	}
 
-	public void RenderGUI () {
-		throw new System.NotImplementedException ();
-	}
-
 	public void Initialize () {
 		throw new System.NotImplementedException ();
 	}
 
-	public void CheckVictory () {
-		throw new System.NotImplementedException ();
+	public bool CheckVictory () {
+		var state = GameController.gameState.matchState;
+		var countAlive = 0;
+		for (var i = 0; i < state.stocks.Length; i++) {
+			if (state.stocks [i] > 0) {
+				countAlive += 1;
+			}
+		}
+
+		if (countAlive == 0 || countAlive == 1) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public PlayerController GetWinner() {
+		return GameController.gameState.players [GetWinnerId ()];
+	}
+
+	public int GetWinnerId() {
+		var state = GameController.gameState.matchState;
+		var winnerId = 0;
+		var previous = 0;
+		for (var i = 0; i < state.stocks.Length; i++) {
+			if (state.stocks [i] > previous) {
+				winnerId = i;
+				previous = state.stocks [i];
+			}
+		}
+		return winnerId;
 	}
 
 	#endregion
@@ -103,13 +131,18 @@ public class TimeRules: MatchRules, IMatchRules {
 		}
 	}
 
-	public void RenderGUI () {
-		throw new System.NotImplementedException ();
-	}
 	public void Initialize () {
 		throw new System.NotImplementedException ();
 	}
-	public void CheckVictory () {
+	public bool CheckVictory () {
+		throw new System.NotImplementedException ();
+	}
+
+	public PlayerController GetWinner () {
+		throw new System.NotImplementedException ();
+	}
+
+	public int GetWinnerId () {
 		throw new System.NotImplementedException ();
 	}
 	#endregion

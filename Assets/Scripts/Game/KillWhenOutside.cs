@@ -5,9 +5,9 @@ using System.Collections;
 public class KillWhenOutside : MonoBehaviour {
 	
 	void OnTriggerExit2D(Collider2D other) {
-		var characterController = other.GetComponent<PlayerController> ();
-		if (characterController != null) {
-			//GameController.gameState.Kill (characterController);			
+		var playerController = other.GetComponentInParent <PlayerController> ();
+		if (playerController != null) {
+			GameController.gameState.matchState.Kill (playerController);
 		}
 	}
 }

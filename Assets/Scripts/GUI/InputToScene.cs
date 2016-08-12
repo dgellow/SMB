@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.SceneManagement;
 
-public class TitleScreen : MonoBehaviour {
+public class InputToScene : MonoBehaviour {
 	public string nextScene;
 
 	void Update () {

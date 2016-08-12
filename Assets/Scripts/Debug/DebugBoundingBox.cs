@@ -18,13 +18,9 @@ public class DebugBoundingBox : MonoBehaviour {
 
 	private Material mat;
 
-	// Use this for initialization
-	void Start () {	
-		allBoxCollider2D = Resources.FindObjectsOfTypeAll<BoxCollider2D> ();
-	}
-	
-	// Update is called once per frame
 	void OnPostRender () {
+		allBoxCollider2D = Resources.FindObjectsOfTypeAll<BoxCollider2D> ();
+
 		if (!DebugController.debugState.showHitBoxes) {
 			return;
 		}
@@ -52,7 +48,7 @@ public class DebugBoundingBox : MonoBehaviour {
 		mat.SetPass (0);
 
 		foreach (var collider in allBoxCollider2D) {
-			if (collider.enabled) {
+			if (collider != null && collider.enabled) {
 				var scale = collider.size * 0.5f;
 				var points = new Vector3[5];
 

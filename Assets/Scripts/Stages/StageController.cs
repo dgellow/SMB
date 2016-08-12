@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class StageController : MonoBehaviour {
 
@@ -8,23 +9,16 @@ public class StageController : MonoBehaviour {
 	public Transform[] startingBlocks;
 	public float introReadyDuration = 5;
 	public float introStartDuration = 2;
+	public float endingDuration = 3;
 
 	private Canvas canvas;
 	private Text introText;
-	private PlayerInfo[] playersInfo;
 
 	void Start() {
 		canvas = GameObject.Find ("StageUI").GetComponent<Canvas> ();
 		var camera = FindObjectOfType<Camera> ();
 		canvas.worldCamera = camera;
 		introText = GameObject.Find ("IntroText").GetComponent<Text> ();
-
-		playersInfo = FindObjectsOfType<PlayerInfo> ();
-		for(var i = 0; i < GameController.gameState.players.Count; i++) {
-			var playerController = GameController.gameState.players [i];
-			var playerInfo = playersInfo [i];
-			//playerInfo.playerId = playerController.player.id;
-		}
 
 		var controllers = FindObjectsOfType<PlayerController> ();
 		controllers.Randomize ();
@@ -40,9 +34,24 @@ public class StageController : MonoBehaviour {
 		StartCoroutine (PlayIntro ());
 	}
 
-	public void Spawn(PlayerController controller) {
+	void FixedUpdate() {
+		var rules = GameController.gameState.matchRules as IMatchRules;
+		if (rules.CheckVictory ()) {
+			foreach (var player in GameController.gameState.players) {
+				player.enabled = false;
+			}
+			StartCoroutine (PlayEnding());
+		} else {
+			Respawn ();
+		}
+	}
+
+	void Spawn(PlayerController playerController) {
 		var spawnPoint = spawnPoints.GetRandomValue ();
-		controller.transform.position = spawnPoint.position;
+		playerController.transform.position = spawnPoint.position;
+		playerController.InstantiateCharacter ();
+		playerController.enabled = true;
+		GameController.gameState.matchState.Revive (playerController);
 	}
 
 	IEnumerator PlayIntro() {
@@ -57,6 +66,22 @@ public class StageController : MonoBehaviour {
 		introText.enabled = false;
 		foreach (var player in GameController.gameState.players) {
 			player.enabled = true;
+		}
+	}
+
+	IEnumerator PlayEnding() {
+		introText.enabled = true;
+		introText.text = "FINISH!";
+		introText.transform.localScale = new Vector3 (3f, 3f, 3f);
+		yield return new WaitForSeconds (endingDuration);
+		SceneManager.LoadScene ("End Match");
+	}
+
+	void Respawn() {
+		foreach (var playerController in GameController.gameState.players) {
+			if (GameController.gameState.matchState.CanRespawn (playerController.player.id)) {
+				Spawn (playerController);
+			}
 		}
 	}
 }
