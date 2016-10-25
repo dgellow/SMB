@@ -15,7 +15,7 @@ public class StageController : MonoBehaviour {
 	private Text introText;
 
 	void Start() {
-		canvas = GameObject.Find ("StageUI").GetComponent<Canvas> ();
+		canvas = FindObjectOfType<Canvas> ();
 		var camera = FindObjectOfType<Camera> ();
 		canvas.worldCamera = camera;
 		introText = GameObject.Find ("IntroText").GetComponent<Text> ();
@@ -72,9 +72,9 @@ public class StageController : MonoBehaviour {
 	IEnumerator PlayEnding() {
 		introText.enabled = true;
 		introText.text = "FINISH!";
-		introText.transform.localScale = new Vector3 (3f, 3f, 3f);
+		introText.transform.localScale = new Vector3 (2f, 2f, 1f);
 		yield return new WaitForSeconds (endingDuration);
-		SceneManager.LoadScene ("End Match");
+		SceneManager.LoadScene ("Match Results");
 	}
 
 	void Respawn() {

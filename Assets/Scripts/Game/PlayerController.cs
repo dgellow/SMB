@@ -132,6 +132,7 @@ public class PlayerController : MonoBehaviour {
 		groundCheck = character.groundCheck;
 		anim = character.GetComponent <Animator> ();
 		characterController = character.GetComponent<ICharacterController> ();
+		rigidbody2D.velocity = new Vector2 ();
 	}
 
 	void Flip () {

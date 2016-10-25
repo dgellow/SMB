@@ -16,12 +16,18 @@ public class HitBox : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D other) {
 		var otherHitBox = other.GetComponent<HitBox> ();
 		var controller = GetComponentInParent<PlayerController> ();
-		var otherController = GetComponentInParent<PlayerController> ();
+		var otherController = other.GetComponentInParent<PlayerController> ();
 		if (otherHitBox && (type == HitBoxType.Damage && otherHitBox.type == HitBoxType.Attack)) {
 			Debug.Log (controller.gameObject.name + " hit by " + otherController.gameObject.name + " for " + otherHitBox.damage + " damages");
-			var force = new Vector3 (otherHitBox.damage, 0, 0);
+
+			var force = controller.transform.position - otherController.transform.position;
+			force.Normalize ();
+			force.y = 1;
+			force.Scale (new Vector2(otherHitBox.damage * 2000, otherHitBox.damage * 1000));
 			var rigidbody2D = GetComponentInParent<Rigidbody2D> ();
 			rigidbody2D.AddForce (force, ForceMode2D.Force);
+
+			GameController.gameState.matchState.Hit (otherController, controller, otherHitBox.damage);
 		}
 	}
 }

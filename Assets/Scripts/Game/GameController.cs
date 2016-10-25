@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Rewired;
 using System.Linq;
 	
+[System.Serializable]
 public class GameController : MonoBehaviour {
 	public static GameController gameState;
 
@@ -34,13 +35,13 @@ public class GameController : MonoBehaviour {
 		players.Clear ();
 
 		// Instantiate and register player controllers
-		var activePlayers = ReInput.players.GetPlayers ().Where (p => p.isPlaying).OrderBy (x => x.id);
-		for (var i = 0; i < activePlayers.Count (); i++) {
+		for (var i = 0; i < ReInput.players.playerCount; i++) {
 			var playerControllerObject = Instantiate (playerPrefab);
 			DontDestroyOnLoad (playerControllerObject);
 			var playerController = playerControllerObject.GetComponent<PlayerController> ();
 			playerController.player = ReInput.players.GetPlayer (i);
 			players.Add (playerController);
+			playersObjects.Add (playerControllerObject);
 		}
 	}
 

@@ -9,6 +9,7 @@ public class MatchState {
 	/// Players kills. Kills of a specific player can be accessed with `matchState.kills[playerId]`.
 	/// </summary>
 	public readonly int[] kills;
+	public readonly int[] suicides;
 	/// <summary>
 	/// Players stocks. Stock of a specific player can be accessed with `matchState.stocks[playerId]`.
 	/// </summary>
@@ -20,11 +21,21 @@ public class MatchState {
 
 	public readonly bool[] alive;
 
+	/// <summary>
+	/// Player id of the last player who hit the player at a specific id. -1 means that it has been initialized or reset, i.e: if `matchState.lastContact[playerId]` is -1 and the player die it will be counted as a suicide instead of a kill.
+	/// </summary>
+	public readonly int[] lastContacts;
+
 	public MatchState(List<PlayerController> players) {
-		kills = new int[GameController.gameState.players.Count];
-		stocks = new int[GameController.gameState.players.Count];
-		damages = new float[GameController.gameState.players.Count];
-		alive = new bool[GameController.gameState.players.Count];
+		kills = new int[players.Count];
+		suicides = new int[players.Count];
+		stocks = new int[players.Count];
+		damages = new float[players.Count];
+		alive = new bool[players.Count];
+		lastContacts = new int[players.Count];
+		for (var i = 0; i < lastContacts.Length; i++) {
+			lastContacts [i] = -1;
+		}
 
 		foreach (var playerController in players) {
 			var playerId = playerController.player.id;
@@ -42,14 +53,33 @@ public class MatchState {
 		}
 	}
 
-	public void Kill(PlayerController playerController) {
+	public void Hit(PlayerController bully, PlayerController target, float amount) {
+		if (bully != null) {
+			lastContacts [target.player.id] = bully.player.id;
+		} else {
+			lastContacts [target.player.id] = -1;
+		}
+		damages [target.player.id] += amount;
+	}
+
+	public void Kill(PlayerController target) {
+		var murdererId = lastContacts [target.player.id];
+		if (murdererId != -1) {
+			kills [murdererId] += 1;
+		} else {
+			suicides [target.player.id] += 1;
+		}
+
+		damages [target.player.id] = 0;
+		lastContacts [target.player.id] = -1;
+
 		if (GameController.gameState.matchRules.GetType () == typeof(StockRules)) {
-			stocks [playerController.player.id] -= 1;
-			if (stocks [playerController.player.id] < 0) {
-				stocks [playerController.player.id] = 0;
+			stocks [target.player.id] -= 1;
+			if (stocks [target.player.id] < 0) {
+				stocks [target.player.id] = 0;
 			}
-			alive[playerController.player.id] = false;
-			Object.Destroy(playerController.character.gameObject);
+			alive[target.player.id] = false;
+			Object.Destroy(target.character.gameObject);
 		}
 	}
 
